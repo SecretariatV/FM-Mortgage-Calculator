@@ -1,0 +1,313 @@
+@use "@styles/globalStyles.scss" as G;
+
+.body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: 20px;
+  background-color: var(--white);
+  width: 1010px;
+  box-shadow: 4px 4px 16px -12px black;
+  overflow: hidden;
+
+  .errorAlam {
+    color: var(--red);
+  }
+
+  @include G.breakpoint("lg") {
+    width: 800px;
+  }
+
+  @include G.breakpoint("md") {
+    grid-template-columns: 1fr;
+    width: 500px;
+  }
+
+  @include G.breakpoint("xm") {
+    width: calc(100% - 48px);
+  }
+
+  .setting {
+    @include G.flexCol;
+    gap: 40px;
+    padding: 40px;
+
+    @include G.breakpoint("xm") {
+      padding: 20px;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      width: 100%;
+
+      button {
+        font-size: 16px;
+        line-height: 16px;
+        text-decoration: underline;
+        border: none;
+        cursor: pointer;
+        color: var(--slate-700);
+        background-color: transparent;
+      }
+    }
+
+    .main {
+      @include G.flexCol;
+      gap: 28px;
+      width: 100%;
+
+      .limit {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        width: 100%;
+
+        @include G.breakpoint("md") {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .panel {
+        @include G.flexCol;
+        gap: 14px;
+        width: 100%;
+
+        label {
+          color: var(--slate-900);
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        div:not(.radio) {
+          border: 1px solid var(--slate-700);
+          border-radius: 6px;
+          position: relative;
+          transition: all ease-in-out 0.2s;
+          overflow: hidden;
+          cursor: pointer;
+          width: 100%;
+
+          &.error {
+            border: 1px solid var(--red);
+
+            &::before {
+              background-color: var(--red);
+              color: var(--white);
+            }
+          }
+
+          &::before {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--slate-100);
+            transition: all ease-in-out 0.2s;
+
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--slate-700);
+          }
+
+          &:has(input:focus) {
+            border: 1px solid var(--lime);
+
+            &::before {
+              background-color: var(--lime);
+              color: var(--slate-900);
+            }
+          }
+        }
+
+        .amount {
+          padding-left: 45px;
+
+          &::before {
+            content: "£";
+            width: 45px;
+            left: 0;
+          }
+        }
+
+        .year {
+          padding-right: 80px;
+
+          &::before {
+            content: "year";
+            width: 80px;
+            right: 0;
+          }
+        }
+
+        .rate {
+          padding-right: 50px;
+
+          &::before {
+            content: "%";
+            width: 50px;
+            right: 0;
+          }
+        }
+
+        input {
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          outline: none;
+          border: none;
+          padding: 15px;
+          width: 100%;
+
+          font-weight: 700;
+          font-size: 16px;
+        }
+
+        .radio {
+          @include G.flexCol;
+          gap: 10px;
+          width: 100%;
+
+          label {
+            border-radius: 6px;
+            padding: 15px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid var(--slate-700);
+            transition: all ease-in-out 0.2s;
+
+            &:has(input:checked) {
+              border: 1px solid var(--lime);
+              background-color: hsla(61, 70%, 52%, 0.213);
+            }
+
+            span {
+              width: 12px;
+              height: 12px;
+              border-radius: 100%;
+              border: 2px solid white;
+              box-shadow: 0 0 0 1px var(--slate-700);
+            }
+
+            input:checked + span {
+              background-color: var(--lime);
+              box-shadow: 0 0 0 1px var(--lime);
+            }
+
+            input {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .calcu {
+      height: 56px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-radius: 56px;
+      border: none;
+      outline: none;
+      background-color: var(--lime);
+      cursor: pointer;
+      position: relative;
+
+      .icon {
+        color: var(--slate-900);
+        position: relative;
+        z-index: 3;
+      }
+
+      span {
+        color: var(--slate-900);
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        position: relative;
+        z-index: 3;
+      }
+
+      &::after {
+        z-index: 2;
+        position: absolute;
+        content: "";
+        inset: 0;
+        transition: background-color ease-in-out 0.2s;
+        background-color: #ffffff00;
+      }
+
+      &:hover::after {
+        background-color: #ffffff30;
+      }
+
+      @include G.breakpoint("md") {
+        width: 100%;
+      }
+    }
+  }
+
+  .view {
+    background-color: var(--slate-900);
+    border-bottom-left-radius: 72px;
+    @include G.flexCol;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    gap: 20px;
+
+    @include G.breakpoint("md") {
+      border-bottom-left-radius: 0px;
+      padding: 40px;
+    }
+
+    @include G.breakpoint("sm") {
+      padding: 20px;
+    }
+
+    &.show {
+      align-items: start;
+      justify-content: start;
+
+      p {
+        text-align: left;
+      }
+    }
+
+    .panel {
+      width: 100%;
+      padding: 32px;
+      border-radius: 8px;
+      background-color: #0e2431;
+      box-shadow: 0px -4px 0px 0px var(--lime);
+      margin-top: 16px;
+      @include G.flexCol;
+      gap: 24px;
+
+      span {
+        color: var(--lime);
+        font-size: 52px;
+        font-weight: 700;
+      }
+
+      .total {
+        @include G.flexCol;
+        gap: 8px;
+        span {
+          color: var(--white);
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
